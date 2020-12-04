@@ -9,7 +9,7 @@ if not redis_version.startswith('.'.join(current_version.split('.')[:-1])):
     raise Exception('Version mismatch! redis version: %s, redis-namespace version: %s' % (redis_version, current_version))
 
 import redis
-from redis.client import Token, Pipeline as _Pipeline, PubSub as _PubSub, EMPTY_RESPONSE
+from redis.client import Pipeline as _Pipeline, PubSub as _PubSub, EMPTY_RESPONSE
 from redis.connection import ConnectionPool
 from redis.exceptions import ResponseError
 from redis._compat import nativestr, basestring, bytes
@@ -251,7 +251,7 @@ def args_with_namespace(ns, *original_args):
     elif before == 'scan_style':
         is_custom_match = False
         for i, a in enumerate(args):
-            if isinstance(a, (basestring, bytes, Token)) and str(a).lower() == 'match':
+            if isinstance(a, (basestring, bytes)) and str(a).lower() == 'match':
                 args[i+1] = add_namespace(ns, args[i + 1])
                 is_custom_match = True
                 break
