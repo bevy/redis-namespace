@@ -12,7 +12,7 @@ import redis
 from redis.client import Pipeline as _Pipeline, PubSub as _PubSub, EMPTY_RESPONSE
 from redis.connection import ConnectionPool
 from redis.exceptions import ResponseError
-from redis._compat import nativestr, basestring, bytes
+from redis._compat import nativestr, basestring
 
 
 NAMESPACED_COMMANDS = {
