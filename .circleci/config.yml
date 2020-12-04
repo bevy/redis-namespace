@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:
+  install-and-test:
     docker:
       - image: circleci/python:3.5.9
       - image: circleci/redis:5.0.0
@@ -12,4 +12,4 @@ jobs:
 workflows:
   test:
     jobs:
-      - test
+      - install-and-test
