@@ -2012,18 +2012,21 @@ class TestRedisCommands(object):
         group = 'group'
         consumer1 = 'consumer1'
         consumer2 = 'consumer2'
+        min = '-'
+        max = '+'
+        count = 10
         m1 = r.xadd(stream, {'foo': 'bar'})
         m2 = r.xadd(stream, {'foo': 'bar'})
         r.xgroup_create(stream, group, 0)
 
         # xpending range on a group that has no consumers yet
-        assert r.xpending_range(stream, group) == []
+        assert r.xpending_range(stream, group, min, max, count) == []
 
         # read 1 message from the group with each consumer
         r.xreadgroup(group, consumer1, streams={stream: 0}, count=1)
         r.xreadgroup(group, consumer2, streams={stream: m1}, count=1)
 
-        response = r.xpending_range(stream, group)
+        response = r.xpending_range(stream, group, min, max, count)
         assert len(response) == 2
         assert response[0]['message_id'] == m1
         assert response[0]['consumer'] == consumer1.encode()
