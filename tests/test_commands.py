@@ -2055,7 +2055,7 @@ class TestRedisCommands(object):
 
     @skip_if_server_version_lt('5.0.0')
     def test_xread(self, r):
-        stream = 'stream'
+        stream = b'stream'
         m1 = r.xadd(stream, {'foo': 'bar'})
         m2 = r.xadd(stream, {'bing': 'baz'})
 
@@ -2098,7 +2098,7 @@ class TestRedisCommands(object):
 
     @skip_if_server_version_lt('5.0.0')
     def test_xreadgroup(self, r):
-        stream = 'stream'
+        stream = b'stream'
         group = 'group'
         consumer = 'consumer'
         m1 = r.xadd(stream, {'foo': 'bar'})
