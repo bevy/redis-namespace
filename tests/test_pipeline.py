@@ -28,7 +28,7 @@ class TestPipeline(object):
         with r.pipeline() as pipe:
             # Initially empty.
             assert len(pipe) == 0
-            assert pipe  # empty pipe is truth redis-py 3.5+
+            assert pipe  # empty pipe is truthy in redis-py 3.5+
 
             # Fill 'er up!
             pipe.set('a', 'a1').set('b', 'b1').set('c', 'c1')

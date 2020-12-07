@@ -422,7 +422,7 @@ class TestSSLConnectionURLParsing(object):
             'password': None,
         }
 
-    # TODO: look into changes to URLs that would affect this test
+    # TODO: these urls are hanging in redis-py 3.5+, look into changes to URLs that would affect this test
     @pytest.mark.skip
     @pytest.mark.skipif(not ssl_available, reason="SSL not installed")
     def test_cert_reqs_options(self):
