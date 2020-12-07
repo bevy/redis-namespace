@@ -251,7 +251,10 @@ def args_with_namespace(ns, *original_args):
     elif before == 'scan_style':
         is_custom_match = False
         for i, a in enumerate(args):
-            if isinstance(a, (basestring, bytes)) and str(a).lower() == 'match':
+            if (
+                isinstance(a, basestring) and str(a).lower() == 'match'
+                or isinstance(a, bytes) and a.decode('utf-8').lower() == 'match'
+            ):
                 args[i+1] = add_namespace(ns, args[i + 1])
                 is_custom_match = True
                 break
