@@ -17,6 +17,15 @@ class DummyConnection(object):
         self.kwargs = kwargs
         self.pid = os.getpid()
 
+    def connect(self):
+        pass
+
+    def can_read(self):
+        return False
+
+    def disconnect(self):
+        pass
+
 
 class TestConnectionPool(object):
     def get_pool(self, connection_kwargs=None, max_connections=None,
