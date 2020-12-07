@@ -338,6 +338,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/socket',
             'db': 0,
+            'username': None,
             'password': None,
         }
 
@@ -347,6 +348,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/socket',
             'db': 0,
+            'username': None,
             'password': 'mypassword',
         }
 
@@ -358,6 +360,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/socket',
             'db': 0,
+            'username': None,
             'password': '/mypass/+ word=$+',
         }
 
@@ -369,6 +372,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/my/path/to/../+_+=$ocket',
             'db': 0,
+            'username': None,
             'password': 'mypassword',
         }
 
@@ -378,6 +382,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/socket',
             'db': 1,
+            'username': None,
             'password': None,
         }
 
@@ -387,6 +392,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/socket',
             'db': 2,
+            'username': None,
             'password': None,
         }
 
@@ -396,6 +402,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
         assert pool.connection_kwargs == {
             'path': '/socket',
             'db': 0,
+            'username': None,
             'password': None,
             'a': '1',
             'b': '2'
