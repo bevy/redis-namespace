@@ -6,8 +6,8 @@ jobs:
       - image: circleci/redis:5.0.0
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install -y python3-setuptools && sudo python setup.py install
-      - run: pip install pytest mock
+      - run: sudo apt-get update && sudo apt-get install -y python3-setuptools && sudo python3 setup.py install
+      - run: pip3 install pytest mock redis==4.5.2
       - run: py.test
 workflows:
   test:
