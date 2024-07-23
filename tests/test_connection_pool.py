@@ -6,7 +6,7 @@ import re
 
 import redis_namespace
 from threading import Thread
-from redis.connection import SSL_AVAILABLE, to_bool
+from redis.connection import ssl_available, to_bool
 from .conftest import skip_if_server_version_lt
 
 
@@ -410,7 +410,7 @@ class TestConnectionPoolUnixSocketURLParsing(object):
 
 
 class TestSSLConnectionURLParsing(object):
-    @pytest.mark.skipif(not SSL_AVAILABLE, reason="SSL not installed")
+    @pytest.mark.skipif(not ssl_available, reason="SSL not installed")
     def test_defaults(self):
         pool = redis.ConnectionPool.from_url('rediss://localhost')
         assert pool.connection_class == redis.SSLConnection
@@ -424,7 +424,7 @@ class TestSSLConnectionURLParsing(object):
 
     # TODO: these urls are hanging in redis-py 3.5+, look into changes to URLs that would affect this test
     @pytest.mark.skip
-    @pytest.mark.skipif(not SSL_AVAILABLE, reason="SSL not installed")
+    @pytest.mark.skipif(not ssl_available, reason="SSL not installed")
     def test_cert_reqs_options(self):
         import ssl
         pool = redis.ConnectionPool.from_url('rediss://?ssl_cert_reqs=none')
