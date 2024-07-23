@@ -4,7 +4,6 @@ import time
 
 import redis
 from redis.exceptions import ConnectionError
-from redis._compat import basestring, unichr
 import redis_namespace
 
 from .conftest import _get_client
@@ -29,7 +28,7 @@ def make_message(type, channel, data, pattern=None):
         'type': type,
         'pattern': pattern and pattern.encode('utf-8') or None,
         'channel': channel and channel.encode('utf-8') or None,
-        'data': data.encode('utf-8') if isinstance(data, basestring) else data
+        'data': data.encode('utf-8') if isinstance(data, str) else data
     }
 
 
@@ -41,7 +40,7 @@ def make_subscribe_test_data(pubsub, type):
             'unsub_type': 'unsubscribe',
             'sub_func': pubsub.subscribe,
             'unsub_func': pubsub.unsubscribe,
-            'keys': ['foo', 'bar', 'uni' + unichr(4456) + 'code']
+            'keys': ['foo', 'bar', 'uni' + chr(4456) + 'code']
         }
     elif type == 'pattern':
         return {
@@ -50,7 +49,7 @@ def make_subscribe_test_data(pubsub, type):
             'unsub_type': 'punsubscribe',
             'sub_func': pubsub.psubscribe,
             'unsub_func': pubsub.punsubscribe,
-            'keys': ['f*', 'b*', 'uni' + unichr(4456) + '*']
+            'keys': ['f*', 'b*', 'uni' + chr(4456) + '*']
         }
     assert False, 'invalid subscribe type: %s' % type
 
@@ -268,7 +267,7 @@ class TestPubSubMessages(object):
 
     def test_unicode_channel_message_handler(self, r):
         p = r.pubsub(ignore_subscribe_messages=True)
-        channel = 'uni' + unichr(4456) + 'code'
+        channel = 'uni' + chr(4456) + 'code'
         channels = {channel: self.message_handler}
         p.subscribe(**channels)
         assert r.publish(channel, 'test message') == 1
@@ -277,8 +276,8 @@ class TestPubSubMessages(object):
 
     def test_unicode_pattern_message_handler(self, r):
         p = r.pubsub(ignore_subscribe_messages=True)
-        pattern = 'uni' + unichr(4456) + '*'
-        channel = 'uni' + unichr(4456) + 'code'
+        pattern = 'uni' + chr(4456) + '*'
+        channel = 'uni' + chr(4456) + 'code'
         p.psubscribe(**{pattern: self.message_handler})
         assert r.publish(channel, 'test message') == 1
         assert wait_for_message(p) is None
@@ -297,9 +296,9 @@ class TestPubSubMessages(object):
 class TestPubSubAutoDecoding(object):
     "These tests only validate that we get unicode values back"
 
-    channel = 'uni' + unichr(4456) + 'code'
-    pattern = 'uni' + unichr(4456) + '*'
-    data = 'abc' + unichr(4458) + '123'
+    channel = 'uni' + chr(4456) + 'code'
+    pattern = 'uni' + chr(4456) + '*'
+    data = 'abc' + chr(4458) + '123'
 
     def make_message(self, type, channel, data, pattern=None):
         return {
