@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 import pytest
 
 import redis
-from redis._compat import unichr, unicode
 
 
 class TestPipeline(object):
@@ -111,7 +110,7 @@ class TestPipeline(object):
             pipe.set('a', 1).set('b', 2).lpush('c', 3).set('d', 4)
             with pytest.raises(redis.ResponseError) as ex:
                 pipe.execute()
-            assert unicode(ex.value).startswith('Command # 3 (LPUSH %sc 3) of '
+            assert str(ex.value).startswith('Command # 3 (LPUSH %sc 3) of '
                                                 'pipeline caused error: ' % ns)
 
             # make sure the pipe was restored to a working state
@@ -153,7 +152,7 @@ class TestPipeline(object):
             with pytest.raises(redis.ResponseError) as ex:
                 pipe.execute()
 
-            assert unicode(ex.value).startswith('Command # 2 (ZREM %sb) of '
+            assert str(ex.value).startswith('Command # 2 (ZREM %sb) of '
                                                 'pipeline caused error: ' % ns)
 
             # make sure the pipe was restored to a working state
@@ -236,13 +235,13 @@ class TestPipeline(object):
             with pytest.raises(redis.ResponseError) as ex:
                 pipe.execute()
 
-            assert unicode(ex.value).startswith('Command # 1 (LLEN %sa) of '
+            assert str(ex.value).startswith('Command # 1 (LLEN %sa) of '
                                                 'pipeline caused error: ' % ns)
 
         assert r['a'] == b'1'
 
     def test_exec_error_in_no_transaction_pipeline_unicode_command(self, r, ns):
-        key = unichr(3456) + 'abcd' + unichr(3421)
+        key = chr(3456) + 'abcd' + chr(3421)
         r[key] = 1
         with r.pipeline(transaction=False) as pipe:
             pipe.llen(key)
@@ -251,9 +250,9 @@ class TestPipeline(object):
             with pytest.raises(redis.ResponseError) as ex:
                 pipe.execute()
 
-            expected = unicode('Command # 1 (LLEN %s%s) of pipeline caused '
+            expected = str('Command # 1 (LLEN %s%s) of pipeline caused '
                                'error: ') % (ns, key)
-            assert unicode(ex.value).startswith(expected)
+            assert str(ex.value).startswith(expected)
 
         assert r[key] == b'1'
 

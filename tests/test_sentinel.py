@@ -3,7 +3,6 @@ import pytest
 from redis import exceptions
 from redis.sentinel import (Sentinel, SentinelConnectionPool,
                             MasterNotFoundError, SlaveNotFoundError)
-from redis._compat import next
 import redis.sentinel
 
 

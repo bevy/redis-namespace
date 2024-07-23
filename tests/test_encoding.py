@@ -3,7 +3,6 @@ import pytest
 import redis
 import redis_namespace
 
-from redis._compat import unichr, unicode
 from .conftest import _get_client
 
 
@@ -13,14 +12,14 @@ class TestEncoding(object):
         return _get_client(redis_namespace.Redis, request=request, decode_responses=True)
 
     def test_simple_encoding(self, r):
-        unicode_string = unichr(3456) + 'abcd' + unichr(3421)
+        unicode_string = chr(3456) + 'abcd' + chr(3421)
         r['unicode-string'] = unicode_string
         cached_val = r['unicode-string']
-        assert isinstance(cached_val, unicode)
+        assert isinstance(cached_val, str)
         assert unicode_string == cached_val
 
     def test_list_encoding(self, r):
-        unicode_string = unichr(3456) + 'abcd' + unichr(3421)
+        unicode_string = chr(3456) + 'abcd' + chr(3421)
         result = [unicode_string, unicode_string, unicode_string]
         r.rpush('a', *result)
         assert r.lrange('a', 0, -1) == result

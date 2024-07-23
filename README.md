@@ -32,13 +32,14 @@ redis_connection.get('ns:foo')
 
 Supported list
 
-| redis-py  | redis-namespace |
-| --- | --- |
-| 3.5.3 | 3.5.3.1 |
-| 3.0.1 | 3.0.1.1 |
-| 2.10.6 | 2.10.6.1 |
-| 2.10.5 | 2.10.5.2 |
-| 2.10.3 | 2.10.3.1 |
+| redis-py | redis-namespace |
+|----------|-----------------|
+| 4.5.5    | 4.5.5.1         |
+| 3.5.3    | 3.5.3.1         |
+| 3.0.1    | 3.0.1.1         |
+| 2.10.6   | 2.10.6.1        |
+| 2.10.5   | 2.10.5.2        |
+| 2.10.3   | 2.10.3.1        |
 
 
 [travis-url]: https://travis-ci.org/guokr/redis-namespace
