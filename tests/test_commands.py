@@ -8,7 +8,7 @@ import redis
 import time
 
 from redis import exceptions
-from redis._parsers.helpers import parse_info
+from redis.client import parse_info
 
 from .conftest import skip_if_server_version_lt, skip_if_server_version_gte, with_bns
 
